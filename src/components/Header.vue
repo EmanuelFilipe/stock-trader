@@ -13,27 +13,27 @@
         <v-spacer></v-spacer>
         <v-toolbar-items>
             <v-btn text @click="endDay">Ending Day</v-btn>
-            <v-menu offset-y>
+            <!-- <v-menu offset-y>
                 <template v-slot:activator="{ on }">
                     <v-btn text v-on="on">
                         Save & Load
                     </v-btn>
                 </template>
                 <template>
-                <v-list>
-                    <v-list-item>
-                        <v-list-item-content>
-                            <v-list-item-title>Save Data</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item>
-                        <v-list-item-content>
-                            <v-list-item-title>Load Data</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </v-list>
-            </template>
-            </v-menu>
+                    <v-list >
+                        <v-list-item>
+                            <v-list-item-content style="cursor: pointer;" @click="saveData">
+                                <v-list-item-title>Save Data</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-list-item>
+                            <v-list-item-content style="cursor: pointer;">
+                                <v-list-item-title>Load Data</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </v-list>
+                </template>
+            </v-menu> -->
             <v-layout align-center>
                 <span class="text-uppercase grey--text text--darken-2">
                     Balance: {{ funds | currency }}
@@ -57,6 +57,10 @@
             ...mapActions(['randomizeStocks']),
             endDay() {
                 this.randomizeStocks()
+            },
+            saveData() {
+                const { funds, stockPortfolio, stocks } = this.$store.getters
+                this.$http.put('data.json',  { funds, stockPortfolio, stocks })
             }
         }
     }
